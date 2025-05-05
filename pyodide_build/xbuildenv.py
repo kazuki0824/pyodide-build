@@ -247,7 +247,6 @@ class CrossBuildEnvManager:
             python_versions = [
                 v.python_version_tuple[:2] for v in metadata.list_compatible_releases()
             ]
-            print(python_versions)
             pyver = tuple(int(x) for x in local["python"].split("."))
             if pyver > python_versions[0]:
                 latest_supported = ".".join(str(x) for x in python_versions[0])
