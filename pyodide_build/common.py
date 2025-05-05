@@ -619,15 +619,14 @@ def download_and_unpack_archive(
     #         f"Failed to download cross-build environment from {url} (status code: {r.status_code})"
     #     )
 
-    with NamedTemporaryFile(suffix=".tar") as f:
-        f_path = Path(f.name)
-        f_path.write_bytes(data)
+    with NamedTemporaryFile(suffix=".tar", mode="wb") as f:
+        f.write(data)
         with warnings.catch_warnings():
             # Python 3.12-3.13 emits a DeprecationWarning when using shutil.unpack_archive without a filter,
             # but filter doesn't work well for zip files, so we suppress the warning until we find a better solution.
             # https://github.com/python/cpython/issues/112760
             warnings.simplefilter("ignore")
-            shutil.unpack_archive(str(f_path), path)
+            shutil.unpack_archive(str(f.name), path)
 
 
 def retrying_rmtree(d):
