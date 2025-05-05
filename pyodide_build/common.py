@@ -619,7 +619,7 @@ def download_and_unpack_archive(
     #         f"Failed to download cross-build environment from {url} (status code: {r.status_code})"
     #     )
 
-    with NamedTemporaryFile(suffix=".tar", mode="wb") as f:
+    with NamedTemporaryFile(suffix=".tar", mode="wb", delete=False) as f:
         f.write(data)
         with warnings.catch_warnings():
             # Python 3.12-3.13 emits a DeprecationWarning when using shutil.unpack_archive without a filter,
